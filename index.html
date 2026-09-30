@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunia Mancing - Tempatnya Info Alat, Spot, dan Teknik Mancing Terlengkap</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0c211a;
+            color: #ffffff;
+        }
+        /* Tekstur Kayu Khusus */
+        .bg-wood {
+            background-color: #8B4513;
+            background-image: repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.05) 1px,
+                transparent 1px,
+                transparent 10px
+            ),
+            linear-gradient(to right, #7a3e14, #964d19, #6d3610);
+        }
+        /* Transisi Fade untuk Halaman */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+        .page-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+
+    <!-- NAVBAR HEADER -->
+    <header class="w-full bg-[#0c211a]/90 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo (Kembali ke Beranda) -->
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-xl font-bold tracking-tight text-white hover:opacity-90 transition">
+                Dunia Mancing
+                <i data-lucide="hook" class="w-5 h-5 text-amber-500 transform -rotate-45"></i>
+            </button>
+
+            <!-- Right Nav / Buttons -->
+            <div class="flex items-center gap-3">
+                <button onclick="navigateTo('dokumentasi')" class="bg-[#182332] hover:bg-[#202e42] text-xs font-semibold px-4 py-2 rounded-lg text-slate-200 transition">
+                    Dokumentasi
+                </button>
+                <button onclick="navigateTo('sewa')" class="bg-[#2156be] hover:bg-[#2962d9] text-xs font-semibold px-4 py-2 rounded-lg text-white transition">
+                    Sewa
+                </button>
+                <button onclick="toggleMobileMenu()" class="p-2 text-slate-300 hover:text-white relative">
+                    <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dropdown Menu / Navigasi Cepat -->
+        <div id="mobileMenu" class="hidden max-w-6xl mx-auto px-4 py-3 border-t border-white/10 bg-[#0a1b15]">
+            <div class="flex flex-wrap gap-2 text-xs font-medium">
+                <button onclick="navigateTo('home')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Beranda</button>
+                <button onclick="navigateTo('alat-mancing')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Alat Mancing</button>
+                <button onclick="navigateTo('spot-mancing')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Spot Mancing</button>
+                <button onclick="navigateTo('teknik-mancing')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Teknik Mancing</button>
+                <button onclick="navigateTo('perawatan-alat')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Perawatan Alat</button>
+                <button onclick="navigateTo('umpan-ikan')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Umpan Ikan</button>
+                <button onclick="navigateTo('galeri')" class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10">Galeri Ikan</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- ==================== HALAMAN BERANDA ==================== -->
+        <div id="page-home" class="page-content active">
+            <!-- HERO SECTION -->
+            <section class="relative max-w-6xl mx-auto px-4 pt-4 pb-8">
+                <div class="relative w-full h-[320px] sm:h-[400px] md:h-[480px] rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=80" alt="Dunia Mancing Hero" class="w-full h-full object-cover object-center" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c211a] via-black/40 to-black/20"></div>
+                    <div class="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight max-w-2xl drop-shadow-md">
+                            Dunia Mancing - Tempatnya Info Alat, Spot, dan Teknik Mancing Terlengkap.
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Floating Sub-banner / Search Bar -->
+                <div class="mt-4 bg-[#0a1b15] border border-white/10 rounded-2xl overflow-hidden shadow-xl flex items-center justify-between p-1.5 md:p-2">
+                    <input type="text" id="searchInput" placeholder="Tempatnya info alat, spot, dan Teknik Mancing Terlengkap..." class="bg-transparent px-4 py-2 text-xs md:text-sm text-slate-200 focus:outline-none w-full placeholder-slate-400">
+                    <button onclick="handleSearch()" class="bg-wood px-5 py-2.5 rounded-xl flex items-center justify-center cursor-pointer hover:brightness-110 transition shadow shrink-0">
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-white"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- MENU CEPAT SECTION -->
+            <section class="max-w-6xl mx-auto px-4 py-6">
+                <h2 class="text-xl font-bold text-white mb-5">Menu Cepat</h2>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
+                    <button onclick="navigateTo('alat-mancing')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="truck" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Alat Mancing</span>
+                    </button>
+
+                    <button onclick="navigateTo('spot-mancing')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Spot Mancing</span>
+                    </button>
+
+                    <button onclick="navigateTo('teknik-mancing')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="compass" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Teknik Mancing</span>
+                    </button>
+
+                    <button onclick="navigateTo('perawatan-alat')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="wrench" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Perawatan Alat</span>
+                    </button>
+
+                    <button onclick="navigateTo('perawatan-alat')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="shield" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Proteksi Alat</span>
+                    </button>
+
+                    <button onclick="navigateTo('umpan-ikan')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="waves" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Umpan Ikan</span>
+                    </button>
+
+                    <button onclick="navigateTo('galeri')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="package" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Galeri Ikan</span>
+                    </button>
+
+                    <button onclick="navigateTo('galeri')" class="bg-[#121c29] hover:bg-[#182638] border border-white/5 rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition group text-center">
+                        <i data-lucide="fish" class="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-200">Galeri Foto</span>
+                    </button>
+                </div>
+            </section>
+
+            <hr class="max-w-6xl mx-auto my-6 border-white/10 px-4" />
+
+            <!-- ARTIKEL TERBARU SECTION -->
+            <section class="max-w-6xl mx-auto px-4 py-4 pb-12">
+                <h2 class="text-xl font-bold text-white mb-5">Artikel Terbaru</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Card 1 -->
+                    <div onclick="navigateTo('alat-mancing')" class="rounded-2xl overflow-hidden bg-[#121c29] border border-white/5 flex flex-col shadow-lg cursor-pointer group">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=800&q=80" alt="Alat Mancing" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                        </div>
+                        <div class="bg-wood p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="text-base font-bold text-white">Alat Mancing</h3>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <p class="text-xs text-amber-100/80 leading-relaxed line-clamp-3">
+                                    Temukan rekomendasi alat mancing terbaik, mulai dari joran, reel, hingga senar berkualitas untuk hasil maksimal.
+                                </p>
+                            </div>
+                            <div class="mt-4 text-right">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-white inline-block"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="navigateTo('perawatan-alat')" class="rounded-2xl overflow-hidden bg-[#121c29] border border-white/5 flex flex-col shadow-lg cursor-pointer group">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=80" alt="Perawatan Alat" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                        </div>
+                        <div class="bg-wood p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="text-base font-bold text-white">Perawatan Alat</h3>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <p class="text-xs text-amber-100/80 leading-relaxed line-clamp-3">
+                                    Tips dan trik merawat joran dan reel agar awet, bebas karat, dan tetap optimal saat digunakan di air tawar maupun laut.
+                                </p>
+                            </div>
+                            <div class="mt-4 text-right">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-white inline-block"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="navigateTo('artikel')" class="rounded-2xl overflow-hidden bg-[#121c29] border border-white/5 flex flex-col shadow-lg cursor-pointer group">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Artikel Terbaru" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                        </div>
+                        <div class="bg-wood p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="text-base font-bold text-white">Artikel Terbaru</h3>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <p class="text-xs text-amber-100/80 leading-relaxed line-clamp-3">
+                                    Simak berita terkini seputar dunia pemancingan, info perlombaan, serta spot rahasia yang wajib Anda kunjungi.
+                                </p>
+                            </div>
+                            <div class="mt-4 text-right">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-white inline-block"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== HALAMAN ALAT MANCING ==================== -->
+        <div id="page-alat-mancing" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4 flex items-center gap-3">
+                <i data-lucide="truck" class="w-8 h-8 text-amber-500"></i> Informasi Alat Mancing
+            </h1>
+            <p class="text-slate-300 mb-8 max-w-3xl leading-relaxed">
+                Panduan lengkap memilih alat memancing terbaik sesuai dengan gaya mancing Anda, mulai dari teknik casting, jigging, hingga pasiran.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=800&q=80" alt="Joran Pancing" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-amber-500 mb-2">Joran (Fishing Rod)</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Pilih material carbon graphite untuk fleksibilitas tinggi atau fiberglass untuk ketahanan beban berat. Sesuaikan aksi joran (fast action/medium action) dengan target ikan Anda.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=80" alt="Reel Pancing" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-amber-500 mb-2">Reel Pancing</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Reel Spinning cocok untuk pemula dan pemakaian umum. Reel Baitcasting (BC) sangat baik untuk akurasi lemparan umpan buatan (lure).</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Senar Pancing" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-amber-500 mb-2">Senar Pancing</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Gunakan senar PE (Polyethylene/Braided) untuk daya tahan tanpa konduktivitas tinggi, atau senar Fluorocarbon yang hampir tidak terlihat di dalam air.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80" alt="Mata Kail" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-amber-500 mb-2">Mata Kail & Aksesori</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Pilih ukuran kail yang proporsional dengan mulut ikan. Gunakan swivel/kili-kili berkualitas agar senar tidak melilit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN SPOT MANCING ==================== -->
+        <div id="page-spot-mancing" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4 flex items-center gap-3">
+                <i data-lucide="map-pin" class="w-8 h-8 text-amber-500"></i> Rekomendasi Spot Mancing
+            </h1>
+            <p class="text-slate-300 mb-8 max-w-3xl leading-relaxed">
+                Temukan lokasi mancing terbaik di Indonesia, dari waduk air tawar yang tenang hingga dermaga dan laut lepas.
+            </p>
+            <div class="space-y-6">
+                <div class="bg-[#121c29] rounded-2xl border border-white/5 overflow-hidden flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Spot Laut" class="w-full md:w-1/3 h-48 md:h-auto object-cover" />
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-lg font-bold text-white">Dermaga & Karang Pantai Selatan</h3>
+                                <span class="bg-amber-500/20 text-amber-400 text-xs px-3 py-1 rounded-full border border-amber-500/30">Spot Laut</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">Menawarkan sensasi mancing pasiran dan karang tebing dengan ombak khas samudra.</p>
+                        </div>
+                        <p class="text-xs text-slate-400 font-semibold">Target: Ikan Kuwe (GT), Kakap Merah, Barracuda</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#121c29] rounded-2xl border border-white/5 overflow-hidden flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80" alt="Spot Air Tawar" class="w-full md:w-1/3 h-48 md:h-auto object-cover" />
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-lg font-bold text-white">Waduk Jatiluhur & Cirata</h3>
+                                <span class="bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/30">Spot Air Tawar</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">Spot favorit dengan perairan tenang dan penyewaan rakit memancing keluarga.</p>
+                        </div>
+                        <p class="text-xs text-slate-400 font-semibold">Target: Ikan Nila, Patin, Bawal, Mujair</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#121c29] rounded-2xl border border-white/5 overflow-hidden flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Spot Payau" class="w-full md:w-1/3 h-48 md:h-auto object-cover" />
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-lg font-bold text-white">Muara Sungai & Hutan Mangrove</h3>
+                                <span class="bg-blue-500/20 text-blue-400 text-xs px-3 py-1 rounded-full border border-blue-500/30">Spot Payau</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">Habitat ideal untuk teknik casting casting dengan tingkat tantangan sela-sela akar bakau.</p>
+                        </div>
+                        <p class="text-xs text-slate-400 font-semibold">Target: Kakap Putih (Barramundi), Mangrove Jack</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN TEKNIK MANCING ==================== -->
+        <div id="page-teknik-mancing" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4 flex items-center gap-3">
+                <i data-lucide="compass" class="w-8 h-8 text-amber-500"></i> Teknik Mancing
+            </h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=800&q=80" alt="Teknik Casting" class="w-full h-40 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-amber-500 mb-2">Casting</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Melempar umpan buatan (lure) lalu menggulungnya kembali untuk menarik minat ikan predator.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Teknik Jigging" class="w-full h-40 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-amber-500 mb-2">Jigging</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Menjatuhkan umpan timah (metal jig) ke dasar laut lalu menghentakkannya ke atas secara konstan.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Teknik Trolling" class="w-full h-40 object-cover" />
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-amber-500 mb-2">Trolling</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">Menarik umpan di belakang kapal yang sedang berjalan pelan untuk mengincar ikan pelagis besar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN PERAWATAN ALAT ==================== -->
+        <div id="page-perawatan-alat" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4 flex items-center gap-3">
+                <i data-lucide="wrench" class="w-8 h-8 text-amber-500"></i> Panduan Perawatan Alat
+            </h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=80" alt="Perawatan Reel" class="rounded-2xl h-48 w-full object-cover border border-white/5" />
+                <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=800&q=80" alt="Pembersihan Joran" class="rounded-2xl h-48 w-full object-cover border border-white/5" />
+                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80" alt="Penyimpanan Alat" class="rounded-2xl h-48 w-full object-cover border border-white/5" />
+            </div>
+            <div class="bg-[#121c29] p-6 rounded-2xl border border-white/5 space-y-4 text-xs text-slate-300 leading-relaxed">
+                <p><strong class="text-white">1. Bilas dengan Air Tawar:</strong> Selalu bilas reel dan joran dengan air tawar mengalir setelah dipakai di laut untuk menghilangkan kadar garam.</p>
+                <p><strong class="text-white">2. Beri Pelumas Khusus:</strong> Teteskan reel oil pada bearing dan grease pada gear secara berkala agar putaran tetap halus.</p>
+                <p><strong class="text-white">3. Kendurkan Drag Reel:</strong> Saat tidak digunakan, kendurkan drag knob agar washer drag tidak cepat aus.</p>
+                <p><strong class="text-white">4. Simpan di Tempat Kering:</strong> Jangan menyimpan joran dan senar di bawah sinar matahari langsung dalam waktu lama.</p>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN UMPAN IKAN ==================== -->
+        <div id="page-umpan-ikan" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4 flex items-center gap-3">
+                <i data-lucide="waves" class="w-8 h-8 text-amber-500"></i> Resep & Jenis Umpan Ikan
+            </h1>
+            <p class="text-slate-300 mb-6 text-sm">Pilih jenis umpan yang sesuai dengan habitat dan target sasaran Anda:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=800&q=80" alt="Umpan Alami" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="font-bold text-amber-500 text-base mb-2">Umpan Alami (Live Bait)</h3>
+                        <p class="text-xs text-slate-300">Cacing tanah, udang hidup, cumi-cumi, dan anak ikan sangat efektif untuk mancing dasar maupun pelampung.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121c29] border border-white/5 rounded-2xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="Umpan Buatan Lure" class="w-full h-48 object-cover" />
+                    <div class="p-6">
+                        <h3 class="font-bold text-amber-500 text-base mb-2">Umpan Buatan (Lure)</h3>
+                        <p class="text-xs text-slate-300">Minnow, Popper, Soft Frog, dan Metal Jig yang dirancang meniru gerakan mangsa asli.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN GALERI / GALERI IKAN ==================== -->
+        <div id="page-galeri" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-6 flex items-center gap-3">
+                <i data-lucide="fish" class="w-8 h-8 text-amber-500"></i> Galeri Tangkapan & Ikan
+            </h1>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 1" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 2" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 3" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 4" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 5" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 6" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 7" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80" alt="Hasil Pancing 8" class="rounded-xl h-40 w-full object-cover border border-white/10 hover:scale-105 transition" />
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN DOKUMENTASI ==================== -->
+        <div id="page-dokumentasi" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4">Dokumentasi & Panduan Komunitas</h1>
+            <div class="mb-6 rounded-2xl overflow-hidden border border-white/5 h-64">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Komunitas Mancing" class="w-full h-full object-cover" />
+            </div>
+            <div class="bg-[#121c29] p-6 rounded-2xl border border-white/5 space-y-3 text-xs text-slate-300 leading-relaxed">
+                <p>Selamat datang di portal dokumentasi resmi Dunia Mancing.</p>
+                <p>Di sini Anda dapat mengakses aturan pemancingan ramah lingkungan (Catch and Release), etika memancing di area publik, serta regulasi kelautan terkini.</p>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN SEWA ==================== -->
+        <div id="page-sewa" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4">Layanan Sewa Alat & Kapal Mancing</h1>
+            <div class="mb-6 rounded-2xl overflow-hidden border border-white/5 h-64">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Kapal Sewa Mancing" class="w-full h-full object-cover" />
+            </div>
+            <div class="bg-[#121c29] p-6 rounded-2xl border border-white/5 text-xs text-slate-300 space-y-4">
+                <p>Kami menyediakan layanan penyewaan set joran & reel premium serta pemesanan kapal/perahu mancing untuk area Pesisir dan Danau.</p>
+                <button onclick="alert('Layanan sewa akan segera terhubung dengan WhatsApp Admin!')" class="bg-amber-500 text-black font-bold px-5 py-2.5 rounded-xl hover:bg-amber-400 transition">
+                    Hubungi Admin Sewa
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== HALAMAN ARTIKEL DETAIL ==================== -->
+        <div id="page-artikel" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-amber-500 font-semibold mb-6 hover:underline text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+            </button>
+            <h1 class="text-2xl sm:text-3xl font-extrabold mb-4">Artikel Terbaru & Berita Komunitas</h1>
+            <div class="mb-6 rounded-2xl overflow-hidden border border-white/5 h-64">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80" alt="Artikel Mancing Terbaru" class="w-full h-full object-cover" />
+            </div>
+            <div class="bg-[#121c29] p-6 rounded-2xl border border-white/5 text-xs text-slate-300 leading-relaxed space-y-3">
+                <p class="text-amber-400 font-semibold">Dipublikasikan pada September 2026</p>
+                <p>Dunia pemancingan terus berkembang dengan teknologi terbaru pada material joran serat karbon dan sistem pengereman reel yang semakin halus. Pastikan Anda terus memperbarui informasi seputar turnamen lokal dan spot ramah keluarga di sekitar wilayah Anda.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#07130e] border-t border-white/10 pt-10 pb-8 text-xs text-slate-400">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+            
+            <!-- Column 1 -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-sm">Dokumentasi</h4>
+                <ul class="space-y-2">
+                    <li><button onclick="navigateTo('dokumentasi')" class="hover:text-white transition">Tentang Kami</button></li>
+                    <li><button onclick="navigateTo('dokumentasi')" class="hover:text-white transition">Kontak Kami</button></li>
+                    <li><button onclick="navigateTo('dokumentasi')" class="hover:text-white transition">Ketentuan</button></li>
+                    <li><button onclick="navigateTo('dokumentasi')" class="hover:text-white transition">Kebijakan Privasi</button></li>
+                </ul>
+            </div>
+
+            <!-- Column 2 -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-sm">Navigasi</h4>
+                <ul class="space-y-2">
+                    <li><button onclick="navigateTo('alat-mancing')" class="hover:text-white transition">Info Alat Mancing</button></li>
+                    <li><button onclick="navigateTo('spot-mancing')" class="hover:text-white transition">Spot Mancing</button></li>
+                    <li><button onclick="navigateTo('teknik-mancing')" class="hover:text-white transition">Teknik Mancing</button></li>
+                </ul>
+            </div>
+
+            <!-- Column 3 -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-sm">Gambar</h4>
+                <ul class="space-y-2">
+                    <li><button onclick="navigateTo('spot-mancing')" class="hover:text-white transition">Rekomendasi Pemancingan</button></li>
+                    <li><button onclick="navigateTo('galeri')" class="hover:text-white transition">Galeri Wisata</button></li>
+                    <li><button onclick="navigateTo('sewa')" class="hover:text-white transition">Sewa Peralatan</button></li>
+                    <li><button onclick="navigateTo('alat-mancing')" class="hover:text-white transition">Kategori Terlengkap</button></li>
+                </ul>
+            </div>
+
+            <!-- Column 4 -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-sm">Media Sosial</h4>
+                <div class="flex items-center gap-3 text-slate-300">
+                    <a href="#" class="hover:text-white transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                    <a href="#" class="hover:text-white transition"><i data-lucide="music-2" class="w-4 h-4"></i></a>
+                    <a href="#" class="hover:text-white transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="hover:text-white transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <!-- Column 5 -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-sm">Dunia Mancing</h4>
+                <p class="text-slate-400 leading-relaxed">
+                    Portal berita dan panduan memancing terbesar di Indonesia.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 pt-6 border-t border-white/5 text-center text-slate-500">
+            &copy; 2026 Dunia Mancing. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- SCRIPT NAVIGASI INTERAKTIF -->
+    <script>
+        // Inisialisasi Ikon Lucide
+        lucide.createIcons();
+
+        // Fungsi Perpindahan Halaman
+        function navigateTo(pageId) {
+            // Sembunyikan semua halaman
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Tampilkan halaman tujuan
+            const targetPage = document.getElementById(`page-${pageId}`) || document.getElementById('page-home');
+            targetPage.classList.add('active');
+
+            // Gulung tampilan ke atas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Sembunyikan menu mobile jika terbuka
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+
+        // Toggle Menu Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Fitur Pencarian Sederhana
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!query) return;
+
+            if (query.includes('alat') || query.includes('joran') || query.includes('reel')) {
+                navigateTo('alat-mancing');
+            } else if (query.includes('spot') || query.includes('lokasi') || query.includes('danau')) {
+                navigateTo('spot-mancing');
+            } else if (query.includes('teknik') || query.includes('cara')) {
+                navigateTo('teknik-mancing');
+            } else if (query.includes('umpan') || query.includes('makan')) {
+                navigateTo('umpan-ikan');
+            } else if (query.includes('sewa') || query.includes('pinjam')) {
+                navigateTo('sewa');
+            } else {
+                navigateTo('artikel');
+            }
+        }
+
+        // Buka lewat Enter di input pencarian
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+    </script>
+</body>
+</html>
