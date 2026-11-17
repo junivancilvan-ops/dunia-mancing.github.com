@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dunia Mancing – Panduan & Mini Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf4ee;--surf:#ffffff;--ink:#12332f;--mute:#4d6b64;--accent:#2a9d8f;--deep:#0f4c4a;--moss:#5a8f5a;--sand:#e9e2c8;--line:#c9ddd3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d2421;--surf:#143632;--ink:#e3f3ec;--mute:#9bbfb4;--accent:#4cc3b3;--deep:#1d6460;--moss:#7ab87a;--sand:#2c3a2e;--line:#245049;color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:'Bricolage Grotesque',Georgia,serif;line-height:1.1;margin:0}
+a{color:inherit}
+.hero{background:linear-gradient(180deg,#0f4c4a 0%,#2a9d8f 70%,#8ccdb8 100%);color:#f2fbf7;padding:64px 20px 110px;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(2.6rem,9vw,5.4rem);font-weight:800;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:18px auto 28px;font-size:1.1rem;color:#d6f1e7}
+.btn{display:inline-block;background:#f4e9bf;color:#0f4c4a;font-weight:600;padding:12px 24px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;font:600 1rem Nunito;margin:4px}
+.btn.alt{background:transparent;color:#f2fbf7;border:2px solid #f2fbf7}
+.wave{position:absolute;left:0;right:0;bottom:-1px;height:70px;width:100%}
+.wave path{fill:var(--bg)}
+.bub{position:absolute;border-radius:50%;border:2px solid #ffffff55;animation:up 9s linear infinite}
+@keyframes up{from{transform:translateY(0);opacity:.8}to{transform:translateY(-420px);opacity:0}}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:6px;justify-content:center;padding:10px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+nav a{text-decoration:none;padding:6px 14px;border-radius:999px;font-weight:600;color:var(--mute)}
+nav a:hover{background:var(--surf)}
+section{max-width:1060px;margin:0 auto;padding:56px 20px}
+h2{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:8px}
+.sub{color:var(--mute);margin:0 0 28px;max-width:60ch}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tab{border:2px solid var(--line);background:var(--surf);color:var(--ink);padding:9px 18px;border-radius:999px;font:600 1rem Nunito;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#06211e}
+.tab:focus-visible,.btn:focus-visible,canvas:focus-visible{outline:3px solid var(--moss);outline-offset:2px}
+.viewer{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:stretch}
+@media(max-width:760px){.viewer{grid-template-columns:1fr}}
+.stage{background:radial-gradient(circle at 50% 40%,#bfe6d8,#6fb9a4 70%,#3c8f80);border-radius:28px;min-height:360px;position:relative;overflow:hidden;touch-action:pan-y}
+.stage canvas{width:100%;height:100%;display:block;position:absolute;inset:0;cursor:grab}
+.hint{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:.85rem;color:#0f3a36;pointer-events:none}
+.info{background:var(--surf);border-radius:28px;padding:28px;border:1px solid var(--line)}
+.info h3{font-size:1.9rem;margin-bottom:8px}
+.info ul{padding-left:20px;margin:12px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:var(--sand);padding:4px 12px;border-radius:999px;font-size:.9rem;font-weight:600}
+.game{background:var(--surf);border:1px solid var(--line);border-radius:28px;padding:18px}
+.game canvas{width:100%;display:block;border-radius:18px;touch-action:none;background:#8ccdb8}
+.bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-weight:600}
+.bar .btn{background:var(--accent);color:#06211e;padding:8px 20px;margin:0}
+footer{text-align:center;color:var(--mute);padding:30px 20px 50px;border-top:1px solid var(--line)}
+@media(prefers-reduced-motion:reduce){.bub{animation:none}html{scroll-behavior:auto}}
+.nature{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 55%,var(--bg) 100%)}
+:root{--sky1:#bfe3dc;--sky2:#e3f2e8;--h1:#a9d3b0;--h2:#7fb88c;--h3:#4f9269}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#0a1d24;--sky2:#0d2a28;--h1:#18423c;--h2:#12352f;--h3:#0c2823}}
+.nature svg{position:absolute;bottom:0;left:0;width:100%;height:46%}
+.cloud{position:absolute;height:34px;border-radius:40px;background:#ffffffaa;animation:drift 80s linear infinite}
+.cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
+.cloud:before{width:46px;height:46px;top:-22px;left:18px}.cloud:after{width:34px;height:34px;top:-14px;left:56px}
+@keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(110vw)}}
+@media (prefers-color-scheme:dark){.cloud{background:#ffffff18}}
+@media(prefers-reduced-motion:reduce){.cloud{animation:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:24px;padding:18px;overflow:hidden}
+.card h3{font-size:1.3rem;margin:10px 0 4px}.card p{margin:0;color:var(--mute);font-size:.95rem;line-height:1.5}
+.card svg{width:100%;height:90px;display:block}
+.spot{height:90px;border-radius:16px;display:grid;place-items:center;font-size:2.6rem}
+details{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:14px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="nature" aria-hidden="true"><span class="cloud" style="top:12%;width:110px"></span><span class="cloud" style="top:26%;width:150px;animation-delay:-35s"></span>
+<svg viewBox="0 0 1200 400" preserveAspectRatio="none"><path style="fill:var(--h1)" d="M0 200 L160 90 L300 190 L470 60 L650 200 L820 100 L1000 190 L1200 80 V400 H0Z"/><path style="fill:var(--h2)" d="M0 280 Q200 180 420 260 T800 250 T1200 240 V400 H0Z"/><g style="fill:var(--h3)"><path d="M60 400 L100 270 L140 400Z"/><path d="M120 400 L170 240 L220 400Z"/><path d="M900 400 L950 250 L1000 400Z"/><path d="M980 400 L1040 220 L1100 400Z"/><path d="M1070 400 L1115 270 L1160 400Z"/><path d="M0 400 Q300 320 600 370 T1200 350 V400Z"/></g></svg></div>
+<header class="hero">
+  <span class="bub" style="left:12%;bottom:20px;width:18px;height:18px"></span>
+  <span class="bub" style="left:78%;bottom:0;width:28px;height:28px;animation-delay:3s"></span>
+  <span class="bub" style="left:45%;bottom:10px;width:12px;height:12px;animation-delay:6s"></span>
+  <h1>Dunia Mancing</h1>
+  <p>Kenali joran, reel, umpan, senar, dan cara merawatnya. Putar semua peralatan dalam 3D, lalu uji keberuntunganmu di mini game.</p>
+  <a class="btn" href="#alat">Lihat peralatan 3D</a><a class="btn alt" href="#game">Main game</a>
+  <svg class="wave" viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40 Q150 0 300 35 T600 35 T900 35 T1200 30 V70 H0Z"/></svg>
+</header>
+<nav style="overflow-x:auto;justify-content:flex-start"><a href="#alat">Peralatan</a><a href="#perahu">Perahu</a><a href="#ikan">Ikan</a><a href="#spot">Spot</a><a href="#game">Mini game</a><a href="#tips">Tips</a><a href="#faq">Tanya jawab</a></nav>
+ 
+<section id="alat">
+  <h2>Kenali peralatanmu</h2>
+  <p class="sub">Pilih satu peralatan, lalu seret model 3D untuk memutarnya.</p>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="viewer">
+    <div class="stage" id="stage"><div class="hint">Seret untuk memutar</div></div>
+    <article class="info" id="info" aria-live="polite"></article>
+  </div>
+</section>
+ 
+<section id="game">
+  <h2>Mini game: Tangkap Ikan</h2>
+  <p class="sub">Gerakkan perahu dengan mouse, jari, atau tombol panah. Klik, ketuk, atau tekan spasi untuk menurunkan kail. Ikan kecil bernilai kecil, ikan besar lebih sulit tapi lebih banyak poinnya. Waktumu 30 detik.</p>
+  <div class="game">
+    <div class="bar"><span>Skor: <b id="sc">0</b></span><span>Waktu: <b id="tm">30</b>s</span><span>Rekor: <b id="hi">0</b></span><button class="btn" id="start">Mulai</button></div>
+    <canvas id="cv" width="720" height="400" tabindex="0" aria-label="Area permainan memancing"></canvas>
+  </div>
+</section>
+ 
+<section id="perahu">
+  <h2>Pilih perahumu</h2>
+  <p class="sub">Dari jukung tradisional sampai perahu motor. Putar modelnya dan bandingkan kegunaannya.</p>
+  <div class="tabs" role="tablist" id="tabs2"></div>
+  <div class="viewer"><div class="stage" id="stage2"><div class="hint">Seret untuk memutar</div></div><article class="info" id="info2" aria-live="polite"></article></div>
+</section>
+<section id="ikan">
+  <h2>Ikan incaran</h2>
+  <p class="sub">Kenali ikan target agar umpan dan waktu memancingmu tepat.</p>
+  <div class="grid" id="fishGrid"></div>
+</section>
+<section id="spot">
+  <h2>Spot mancing favorit</h2>
+  <p class="sub">Setiap tempat punya karakter dan peralatan yang paling cocok.</p>
+  <div class="grid" id="spotGrid"></div>
+</section>
+<section id="tips">
+  <h2>Tiga kebiasaan pemancing yang awet</h2>
+  <p class="sub">Bilas semua alat dengan air tawar setelah dipakai di laut. Periksa senar sebelum berangkat, bukan setelah ikan lepas. Sesuaikan umpan dengan ikan dan kedalaman air.</p>
+</section>
+<section id="faq">
+  <h2>Tanya jawab</h2>
+  <p class="sub">Pertanyaan yang paling sering muncul dari pemancing pemula.</p>
+  <details><summary>Kapan waktu terbaik memancing?</summary><p>Pagi sebelum matahari tinggi dan sore menjelang petang. Ikan lebih aktif saat suhu air sejuk dan arus mulai bergerak.</p></details>
+  <details><summary>Joran dan reel apa untuk pemula?</summary><p>Joran spinning 1,8–2,4 m dengan reel 2000–3000 dan senar monofilament 10–15 lb sudah cukup untuk banyak situasi.</p></details>
+  <details><summary>Perlu izin memancing?</summary><p>Memancing untuk hobi di perairan umum umumnya bebas, tetapi kolam pemancingan dan kawasan konservasi punya aturan sendiri. Tanyakan pengelola setempat.</p></details>
+  <details><summary>Perlu rompi pelampung di perahu?</summary><p>Ya. Selalu pakai pelampung, terutama di laut, danau besar, dan saat cuaca berubah.</p></details>
+  <details><summary>Bagaimana merawat umpan hidup?</summary><p>Simpan di tempat teduh dengan wadah berlubang udara dan ganti air secara berkala. Jangan biarkan terkena panas langsung.</p></details>
+</section>
+<footer>Dunia Mancing. Selamat memancing dan jaga kebersihan perairan.</footer>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const DATA={
+joran:{n:'Joran',d:'Joran adalah tongkat utama yang menyalurkan tenaga lemparan dan meredam tarikan ikan. Pilih berdasarkan panjang, kekuatan (power), dan kelenturan (action).',t:['Joran pendek 1,5–2,1 m: nyaman untuk spot sempit dan lure kecil.','Joran panjang 2,4 m ke atas: lemparan jauh, cocok untuk pantai dan dermaga.','Action cepat (fast) peka terhadap sentuhan; action lambat lebih memaafkan.'],c:['Spinning','Casting','Telescopic','Surf','Joran tegek']},
+reel:{n:'Reel',d:'Reel menggulung dan mengulur senar, sekaligus mengatur tekanan lewat drag. Ukuran reel harus seimbang dengan jorannya.',t:['Ukuran 1000–2500 untuk ikan kecil, 3000–5000 untuk ikan sedang hingga besar.','Atur drag sekitar sepertiga dari kekuatan putus senar.','Gear ratio tinggi menggulung cepat, rendah memberi tenaga tarik.'],c:['Spinning','Baitcasting','Spincast','Electric']},
+umpan:{n:'Umpan',d:'Umpan memancing ikan agar menyambar kail. Ada umpan hidup, umpan alami, dan umpan tiruan (lure) yang menyerupai mangsa.',t:['Cacing, udang, dan cumi cocok untuk ikan dasar.','Minnow dan popper efektif untuk ikan pemangsa di permukaan.','Soft lure lentur menirukan gerakan ikan kecil yang terluka.'],c:['Cacing','Udang','Minnow','Popper','Soft lure','Jig']},
+senar:{n:'Benang / Senar',d:'Senar adalah penghubung antara kamu dan ikan. Pilih jenis yang sesuai kondisi air dan ukuran target.',t:['Monofilament: elastis, murah, mudah dipakai pemula.','Braided (PE): tipis, kuat, tanpa melar sehingga sangat peka.','Fluorocarbon: nyaris tak terlihat di air, bagus sebagai leader.'],c:['Monofilament','Braid (PE)','Fluorocarbon','Leader']},
+servis:{n:'Perbaikan & Perawatan',d:'Alat yang dirawat bertahan bertahun-tahun. Siapkan kotak perbaikan kecil di tasmu agar masalah ringan tidak merusak hari memancing.',t:['Bilas joran dan reel dengan air tawar, lalu keringkan sebelum disimpan.','Beri pelumas tipis pada bearing dan handle reel setiap beberapa bulan.','Ganti senar yang kusut, kasar, atau berubah warna; periksa guide joran dari retakan.'],c:['Tang','Gunting senar','Pelumas','Kail cadangan','Ring guide']}
+};
+const M=(c,o)=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.45,metalness:.25},o||{}));
+const mk=(g,m,x,y,z)=>{const s=new THREE.Mesh(g,m);s.position.set(x||0,y||0,z||0);return s};
+const B={
+joran(){const g=new THREE.Group();
+ g.add(mk(new THREE.CylinderGeometry(.04,.1,4.8,20),M(0x1f5c46),0,.5,0));
+ g.add(mk(new THREE.CylinderGeometry(.14,.14,1.3,20),M(0xc9a66b,{roughness:.9}),0,-2.2,0));
+ g.add(mk(new THREE.CylinderGeometry(.17,.17,.3,20),M(0x2a2a2a),0,-1.5,0));
+ g.add(mk(new THREE.CylinderGeometry(.18,.18,.12,20),M(0xe0b84a,{metalness:.8}),0,-2.9,0));
+ for(let i=0;i<5;i++){const t=mk(new THREE.TorusGeometry(.1-i*.012,.016,8,20),M(0xdddddd,{metalness:.9,roughness:.2}),.14-i*.02,-.7+i*.95,0);t.rotation.y=Math.PI/2;g.add(t)}
+ g.rotation.z=.8;g.scale.setScalar(.75);return g},
+reel(){const g=new THREE.Group(),h=Math.PI/2;
+ const sp=mk(new THREE.CylinderGeometry(1,1,.12,40),M(0xe0b84a,{metalness:.8,roughness:.25}),0,.38,0);sp.rotation.x=h;sp.position.set(0,0,.45);g.add(sp);
+ const ln=mk(new THREE.CylinderGeometry(.9,.9,.6,40),M(0xbfe3d6,{roughness:.9}));ln.rotation.x=h;g.add(ln);
+ const bd=mk(new THREE.CylinderGeometry(1.15,1.15,.5,40),M(0x1f5c46,{metalness:.5}),0,0,-.55);bd.rotation.x=h;g.add(bd);
+ g.add(mk(new THREE.BoxGeometry(.5,.25,1.6),M(0x2a2a2a),0,1.25,-.3));
+ g.add(mk(new THREE.BoxGeometry(1.8,.18,.18),M(0xdddddd,{metalness:.9}),.9,0,-1));
+ g.add(mk(new THREE.SphereGeometry(.28,20,20),M(0x2a9d8f),1.8,0,-1));
+ const bl=mk(new THREE.TorusGeometry(1.1,.045,8,32,Math.PI),M(0xdddddd,{metalness:.9}),0,0,.62);bl.rotation.z=h;g.add(bl);
+ g.rotation.set(.3,-.6,0);return g},
+umpan(){const g=new THREE.Group();
+ const b=mk(new THREE.SphereGeometry(1,32,24),M(0xf08a3c,{roughness:.25}));b.scale.set(1.7,.75,.7);g.add(b);
+ const bl=mk(new THREE.SphereGeometry(1,32,24),M(0xf6e7b4,{roughness:.3}),0,-.25,0);bl.scale.set(1.5,.5,.6);g.add(bl);
+ const tl=mk(new THREE.ConeGeometry(.6,1.1,20),M(0x2a9d8f),-2,0,0);tl.rotation.z=Math.PI/2;g.add(tl);
+ [.3,-.3].forEach(z=>g.add(mk(new THREE.SphereGeometry(.18,16,16),M(0x111111),1.2,.2,z*1.2)));
+ g.add(mk(new THREE.BoxGeometry(.9,.05,.5),M(0x2b2b2b),1.75,-.35,0));
+ [-.8,.7].forEach(x=>{const k=mk(new THREE.TorusGeometry(.28,.035,8,20,Math.PI*1.5),M(0xdddddd,{metalness:.95,roughness:.15}),x,-1.1,0);k.rotation.z=Math.PI*.9;g.add(k)});
+ g.rotation.set(.2,-.5,0);return g},
+senar(){const g=new THREE.Group();
+ const w=mk(new THREE.CylinderGeometry(.95,.95,1.4,40),M(0x8fd18f,{roughness:.9}));g.add(w);
+ [.72,-.72].forEach(y=>g.add(mk(new THREE.CylinderGeometry(1.2,1.2,.14,40),M(0x1f5c46),0,y,0)));
+ g.add(mk(new THREE.CylinderGeometry(.18,.18,1.7,20),M(0xdddddd,{metalness:.9}),0,0,0));
+ const c=new THREE.CatmullRomCurve3([new THREE.Vector3(.95,.3,0),new THREE.Vector3(1.8,.5,.8),new THREE.Vector3(2.6,-.3,1.4),new THREE.Vector3(3.3,-.9,.6)]);
+ g.add(mk(new THREE.TubeGeometry(c,40,.035,8),M(0x8fd18f,{roughness:.8})));
+ g.rotation.set(.5,0,.2);g.position.x=-.8;return g},
+servis(){const g=new THREE.Group();
+ g.add(mk(new THREE.BoxGeometry(3,1.2,1.4),M(0x2f6f57,{roughness:.6}),0,-.4,0));
+ g.add(mk(new THREE.BoxGeometry(3.1,.25,1.5),M(0x1f5c46),0,.3,0));
+ g.add(mk(new THREE.TorusGeometry(.5,.07,10,24,Math.PI),M(0x2a2a2a),0,.45,0));
+ g.add(mk(new THREE.BoxGeometry(.4,.25,.1),M(0xe0b84a,{metalness:.8}),0,.1,.76));
+ [.3,-.3].forEach((a,i)=>{const p=mk(new THREE.BoxGeometry(.14,1.7,.1),M(i?0xd9534f:0xc9a66b),1.6,1.1,0);p.rotation.z=a;g.add(p)});
+ g.add(mk(new THREE.CylinderGeometry(.3,.3,.4,20),M(0xe0b84a,{metalness:.7}),-1.9,-.8,.9));
+ g.rotation.set(.35,-.5,0);return g}
+};
+// --- viewer ---
+const stage=document.getElementById('stage'),tabs=document.getElementById('tabs'),info=document.getElementById('info');
+let cur,rotY=0,drag=false,lx=0,renderer,scene,cam,ok=true;
+try{
+ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,2));stage.appendChild(renderer.domElement);
+ scene=new THREE.Scene();cam=new THREE.PerspectiveCamera(40,1,.1,100);cam.position.set(0,0,9);
+ scene.add(new THREE.HemisphereLight(0xeafff6,0x2a5a50,1.1));
+ const d=new THREE.DirectionalLight(0xffffff,1.1);d.position.set(4,6,5);scene.add(d);
+}catch(e){ok=false;stage.innerHTML='<p style="padding:30px;color:#0f3a36">Peragaan 3D tidak tersedia di perangkat ini. Informasi tetap bisa dibaca di samping.</p>'}
+function show(k){
+ if(ok){if(cur)scene.remove(cur);cur=B[k]();scene.add(cur)}
+ const x=DATA[k];
+ info.innerHTML='<h3>'+x.n+'</h3><p>'+x.d+'</p><ul>'+x.t.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="chips">'+x.c.map(c=>'<span class="chip">'+c+'</span>').join('')+'</div>';
+ [...tabs.children].forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
+}
+Object.keys(DATA).forEach(k=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.dataset.k=k;b.textContent=DATA[k].n;b.onclick=()=>show(k);tabs.appendChild(b)});
+show('joran');
+if(ok){
+ const rs=()=>{const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()};
+ addEventListener('resize',rs);rs();
+ const el=renderer.domElement;
+ el.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;el.setPointerCapture(e.pointerId)});
+ el.addEventListener('pointerup',()=>drag=false);
+ el.addEventListener('pointermove',e=>{if(drag){rotY+=(e.clientX-lx)*.01;lx=e.clientX}});
+ const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ (function loop(t){requestAnimationFrame(loop);if(!drag&&!calm)rotY+=.006;cur.rotation.y=rotY;cur.position.y=calm?0:Math.sin(t/900)*.12;renderer.render(scene,cam)})(0);
+}
+// --- game ---
+const cv=document.getElementById('cv'),cx=cv.getContext('2d'),W=720,H=400,WL=90;
+const $=id=>document.getElementById(id);
+let hi=0;try{hi=+localStorage.getItem('mancing-hi')||0}catch(e){}
+$('hi').textContent=hi;
+let S={run:false,score:0,time:30,bx:360,tx:360,hook:null,fish:[],last:0,msg:'Tekan Mulai'};
+const cols=['#f08a3c','#e9c46a','#e76f51','#8ecae6','#b5838d'];
+function spawn(){const big=Math.random()<.3,l=Math.random()<.5;
+ S.fish.push({x:l?-60:W+60,y:WL+60+Math.random()*(H-WL-100),v:(l?1:-1)*(big?.9:1.6+Math.random()),s:big?34:20,p:big?30:10,c:cols[Math.random()*5|0],caught:false})}
+function begin(){S={run:true,score:0,time:30,bx:S.bx||360,tx:S.bx||360,hook:null,fish:[],last:performance.now(),msg:''};for(let i=0;i<7;i++){spawn();S.fish[i].x=Math.random()*W}$('start').textContent='Main lagi';cv.focus();requestAnimationFrame(tick)}
+function drop(){if(S.run&&!S.hook)S.hook={x:S.bx,y:WL-10,dir:1,f:null}}
+function tick(t){
+ if(!S.run){draw();return}
+ const dt=Math.min((t-S.last)/16.7,3);S.last=t;S.time-=dt/60;
+ S.bx+=(S.tx-S.bx)*.15*dt;
+ const h=S.hook;
+ if(h){h.y+=h.dir*(h.dir>0?4.5:3.5)*dt;if(!h.f)h.x+=(S.bx-h.x)*.02*dt;
+  if(h.dir>0){for(const f of S.fish)if(!f.caught&&Math.abs(f.x-h.x)<f.s+6&&Math.abs(f.y-h.y)<f.s*.8){f.caught=true;h.f=f;h.dir=-1;break}
+   if(h.y>H-12)h.dir=-1}
+  else if(h.y<=WL-10){if(h.f){S.score+=h.f.p;S.fish=S.fish.filter(f=>f!==h.f);spawn()}S.hook=null}
+  if(h.f){h.f.x=h.x;h.f.y=h.y+h.f.s*.6}}
+ for(const f of S.fish){if(!f.caught){f.x+=f.v*dt;if(f.x<-80||f.x>W+80){f.x=f.v>0?-60:W+60;f.y=WL+60+Math.random()*(H-WL-100)}}}
+ if(S.time<=0){S.run=false;S.time=0;S.msg='Waktu habis! Skor '+S.score;if(S.score>hi){hi=S.score;$('hi').textContent=hi;try{localStorage.setItem('mancing-hi',hi)}catch(e){}}}
+ $('sc').textContent=S.score;$('tm').textContent=Math.ceil(S.time);
+ draw();if(S.run)requestAnimationFrame(tick)}
+function draw(){
+ let g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#cfeee3');g.addColorStop(WL/H,'#cfeee3');g.addColorStop(WL/H+.01,'#4db6a6');g.addColorStop(1,'#0f4c4a');
+ cx.fillStyle=g;cx.fillRect(0,0,W,H);
+ cx.fillStyle='#5a8f5a';cx.beginPath();cx.moveTo(0,WL);cx.quadraticCurveTo(80,40,200,WL);cx.fill();cx.beginPath();cx.moveTo(W,WL);cx.quadraticCurveTo(W-90,30,W-230,WL);cx.fill();
+ for(const f of S.fish){cx.fillStyle=f.c;const d=f.caught?1:Math.sign(f.v);cx.beginPath();cx.ellipse(f.x,f.y,f.s,f.s*.55,0,0,7);cx.fill();
+  cx.beginPath();cx.moveTo(f.x-d*f.s*.9,f.y);cx.lineTo(f.x-d*f.s*1.5,f.y-f.s*.5);cx.lineTo(f.x-d*f.s*1.5,f.y+f.s*.5);cx.fill();
+  cx.fillStyle='#111';cx.beginPath();cx.arc(f.x+d*f.s*.5,f.y-f.s*.1,3,0,7);cx.fill()}
+ cx.fillStyle='#b8894d';cx.beginPath();cx.moveTo(S.bx-50,WL-18);cx.lineTo(S.bx+50,WL-18);cx.lineTo(S.bx+34,WL+2);cx.lineTo(S.bx-34,WL+2);cx.fill();
+ cx.strokeStyle='#3b2a14';cx.lineWidth=4;cx.beginPath();cx.moveTo(S.bx+10,WL-18);cx.lineTo(S.bx+36,WL-62);cx.stroke();
+ const h=S.hook,hy=h?h.y:WL-10,hx=h?h.x:S.bx+36;
+ cx.strokeStyle='#fff';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(S.bx+36,WL-62);cx.lineTo(hx,hy);cx.stroke();
+ cx.strokeStyle='#e9e2c8';cx.lineWidth=3;cx.beginPath();cx.arc(hx,hy+4,5,0,Math.PI*1.4);cx.stroke();
+ cx.fillStyle='#fff';cx.font='600 28px Nunito,sans-serif';cx.textAlign='center';
+ if(S.msg)cx.fillText(S.msg,W/2,H/2);
+}
+cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();S.tx=Math.max(50,Math.min(W-50,(e.clientX-r.left)/r.width*W))});
+cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();S.tx=(e.clientX-r.left)/r.width*W;drop()});
+cv.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();drop()}if(e.key==='ArrowLeft')S.tx=Math.max(50,S.tx-40);if(e.key==='ArrowRight')S.tx=Math.min(W-50,S.tx+40)});
+$('start').onclick=begin;draw();
+// --- perahu 3D ---
+const hull=(sx,sy,sz,c)=>{const m=mk(new THREE.SphereGeometry(1,32,16,0,Math.PI*2,Math.PI/2,Math.PI/2),M(c,{roughness:.6,side:THREE.DoubleSide}));m.scale.set(sx,sy,sz);return m};
+const rim=(sx,sz,c,r)=>{const t=mk(new THREE.TorusGeometry(1,r||.06,10,48),M(c));t.rotation.x=Math.PI/2;t.scale.set(sx,sz,1);return t};
+const cyl=(r,l,c,x,y,z,rz,rx)=>{const m=mk(new THREE.CylinderGeometry(r,r,l,16),M(c),x,y,z);m.rotation.z=rz||0;m.rotation.x=rx||0;return m};
+const BT={
+jukung(){const g=new THREE.Group();g.add(hull(3,.8,.75,0x2f6f8f),rim(3,.75,0xf4e9bf));
+ [1.9,-1.9].forEach(z=>{g.add(cyl(.18,4.2,0xc9a66b,0,.1,z,Math.PI/2));[-1,1].forEach(x=>g.add(cyl(.05,1.9,0x8a5a2b,x,.1,z/2,0,Math.PI/2)))});
+ g.add(cyl(.05,3,0x8a5a2b,0,1.5,0));const s=mk(new THREE.PlaneGeometry(1.8,2.4),M(0xf6e7b4,{side:THREE.DoubleSide}),.9,1.6,0);g.add(s);g.rotation.y=-.5;return g},
+karet(){const g=new THREE.Group();const t=mk(new THREE.TorusGeometry(1,.34,20,48),M(0xe9a23c,{roughness:.7}));t.rotation.x=Math.PI/2;t.scale.set(2.2,1,.85);g.add(t);
+ const fl=mk(new THREE.CircleGeometry(.95,32),M(0x586e68,{side:THREE.DoubleSide}),0,.05,0);fl.rotation.x=-Math.PI/2;fl.scale.set(2.0,.75,1);g.add(fl);
+ [-.6,.9].forEach(x=>g.add(mk(new THREE.BoxGeometry(.3,.12,1.7),M(0xdddddd),x,.3,0)));g.rotation.y=-.5;g.position.y=-.3;return g},
+kano(){const g=new THREE.Group();g.add(hull(3.2,.5,.7,0xd9534f),rim(3.2,.7,0xf6f1e0,.05));
+ const c=mk(new THREE.CircleGeometry(.6,24),M(0x20302d),0,.02,0);c.rotation.x=-Math.PI/2;c.scale.set(1.5,1,1);g.add(c);
+ const p=new THREE.Group();p.add(cyl(.04,3,0x8a5a2b,0,0,0));[1.5,-1.5].forEach(y=>{const b=mk(new THREE.SphereGeometry(.4,16,12),M(0x2a9d8f),0,y,0);b.scale.set(.5,1,.15);p.add(b)});p.rotation.set(0,0,1.1);p.position.set(0,1,1.2);g.add(p);g.rotation.y=-.5;return g},
+motor(){const g=new THREE.Group();g.add(hull(2.8,.9,1.1,0xf2f4f0),rim(2.8,1.1,0x2a9d8f,.08));
+ g.add(mk(new THREE.BoxGeometry(.7,.7,.6),M(0x1f5c46),.3,.55,0));g.add(mk(new THREE.BoxGeometry(.06,.6,.9),M(0x9bd8e8,{transparent:true,opacity:.6}),.7,.9,0));
+ [-1.2,1.3].forEach(x=>g.add(mk(new THREE.BoxGeometry(.5,.18,1.4),M(0xc9a66b),x,.15,0)));
+ g.add(mk(new THREE.BoxGeometry(.5,1.1,.5),M(0x2a2a2a),-2.9,.1,0));g.add(cyl(.05,.9,0xdddddd,-2.9,-.8,0));
+ g.rotation.y=-.5;return g}};
+const DB={
+jukung:{n:'Jukung',d:'Perahu kayu tradisional Nusantara dengan cadik di kiri-kanan. Sangat stabil di ombak kecil dan khas di pesisir.',t:['Cadik membuatnya sulit terbalik.','Cocok untuk memancing di teluk dan dekat pantai.','Biasa digerakkan dayung, layar, atau mesin tempel kecil.'],c:['Kayu','Cadik','Laut dangkal']},
+karet:{n:'Perahu Karet',d:'Perahu tiup yang ringan, murah, dan mudah dibawa. Pilihan praktis untuk sungai dan danau.',t:['Bisa dilipat dan dimasukkan ke bagasi.','Pastikan semua ruang udara terisi penuh.','Hindari tepi batu tajam dan ranting runcing.'],c:['Portabel','Sungai','Danau']},
+kano:{n:'Kano / Kayak',d:'Perahu ramping yang digerakkan dayung. Senyap, sehingga ikan tidak mudah kabur.',t:['Sangat tenang untuk memancing di spot dangkal.','Latih keseimbangan sebelum melempar kail.','Ikat joran agar tidak hanyut bila terbalik.'],c:['Dayung','Senyap','Perairan tenang']},
+motor:{n:'Perahu Motor',d:'Perahu dengan mesin tempel untuk menjangkau spot jauh. Muat banyak orang dan peralatan.',t:['Cek bahan bakar dan mesin sebelum berangkat.','Wajib bawa pelampung untuk setiap penumpang.','Cocok untuk memancing laut dalam dan danau luas.'],c:['Mesin tempel','Laut','Waduk']}};
+(function(){const st=$('stage2'),tb=$('tabs2'),inf=$('info2');if(!window.THREE||!st)return;let r,sc,cm,cu,ry=0,dg=false,lx2=0,vis=true;
+ try{r=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){st.innerHTML='<p style="padding:30px;color:#0f3a36">Peragaan 3D tidak tersedia.</p>'}
+ if(r){r.setPixelRatio(Math.min(devicePixelRatio,2));st.appendChild(r.domElement);sc=new THREE.Scene();cm=new THREE.PerspectiveCamera(40,1,.1,100);cm.position.set(0,1.5,10);cm.lookAt(0,0,0);
+ sc.add(new THREE.HemisphereLight(0xeafff6,0x2a5a50,1.1));const d=new THREE.DirectionalLight(0xffffff,1.1);d.position.set(4,6,5);sc.add(d);
+ const w=mk(new THREE.CircleGeometry(4.6,48),M(0x2a7f8f,{transparent:true,opacity:.55,roughness:.2}),0,-.7,0);w.rotation.x=-Math.PI/2;sc.add(w);
+ const rs=()=>{r.setSize(st.clientWidth,st.clientHeight,false);cm.aspect=st.clientWidth/st.clientHeight;cm.updateProjectionMatrix()};addEventListener('resize',rs);rs();
+ const e=r.domElement;e.addEventListener('pointerdown',v=>{dg=true;lx2=v.clientX;e.setPointerCapture(v.pointerId)});e.addEventListener('pointerup',()=>dg=false);e.addEventListener('pointermove',v=>{if(dg){ry+=(v.clientX-lx2)*.01;lx2=v.clientX}});
+ new IntersectionObserver(a=>vis=a[0].isIntersecting).observe(st);const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ (function lp(t){requestAnimationFrame(lp);if(!vis||!cu)return;if(!dg&&!calm)ry+=.006;cu.rotation.y=ry;cu.position.y=(calm?0:Math.sin(t/800)*.1)+(cu.userData.y||0);r.render(sc,cm)})(0)}
+ function go(k){if(r){if(cu)sc.remove(cu);cu=BT[k]();sc.add(cu)}const x=DB[k];inf.innerHTML='<h3>'+x.n+'</h3><p>'+x.d+'</p><ul>'+x.t.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="chips">'+x.c.map(c=>'<span class="chip">'+c+'</span>').join('')+'</div>';[...tb.children].forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k))}
+ Object.keys(DB).forEach(k=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.dataset.k=k;b.textContent=DB[k].n;b.onclick=()=>go(k);tb.appendChild(b)});go('jukung')})();
+// --- ikan & spot ---
+const fs=c=>'<svg viewBox="0 0 160 90"><ellipse cx="72" cy="45" rx="52" ry="26" fill="'+c+'"/><path d="M118 45 L152 20 L152 70Z" fill="'+c+'"/><path d="M60 20 Q75 4 92 22Z" fill="'+c+'" opacity=".8"/><circle cx="38" cy="39" r="5" fill="#12332f"/><path d="M48 56 Q62 66 76 56" stroke="#ffffff88" stroke-width="3" fill="none"/></svg>';
+$('fishGrid').innerHTML=[['Nila','#7aa38f','Air tawar. Umpan: cacing, pelet. Aktif pagi dan sore.'],['Gabus','#5b6b4a','Pemangsa rawa. Umpan: katak tiruan, anak ikan.'],['Kakap','#d1604f','Laut dekat karang. Umpan: udang, cumi, minnow.'],['Kerapu','#b5783a','Dasar karang. Butuh senar kuat dan drag yang pas.'],['Tenggiri','#6aa3c4','Cepat dan agresif. Cocok dengan jig dan popper.'],['Bandeng','#c9d6cf','Tambak dan muara. Umpan: pasta atau lumut halus.']].map(f=>'<div class="card">'+fs(f[1])+'<h3>'+f[0]+'</h3><p>'+f[2]+'</p></div>').join('');
+$('spotGrid').innerHTML=[['🌊','Pantai & laut','linear-gradient(#bfe6ee,#4db6c4)','Lempar jauh dengan joran surf. Perhatikan pasang surut dan ombak.'],['🏞️','Sungai','linear-gradient(#d2ecd0,#6fb08a)','Cari tikungan, bawah pohon rindang, dan arus pelan di tepian.'],['⛰️','Danau & waduk','linear-gradient(#cfe6ee,#5f9fb0)','Cocok dengan perahu. Ikan sering berkumpul dekat tepi dan struktur.'],['🎏','Kolam pemancingan','linear-gradient(#e3f2c9,#8fc48b)','Ramah pemula dan keluarga, hasil hampir selalu ada.'],['🦀','Muara','linear-gradient(#e6e3c8,#7fae9a)','Pertemuan air tawar dan laut. Banyak jenis ikan, arus berubah-ubah.']].map(s=>'<div class="card"><div class="spot" style="background:'+s[2]+'">'+s[0]+'</div><h3>'+s[1]+'</h3><p>'+s[3]+'</p></div>').join('');
+</script>
+</body>
+</html>
