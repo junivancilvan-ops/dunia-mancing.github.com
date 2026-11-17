@@ -65,6 +65,13 @@ footer{text-align:center;color:var(--mute);padding:30px 20px 50px;border-top:1px
 .spot{height:90px;border-radius:16px;display:grid;place-items:center;font-size:2.6rem}
 details{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:14px 20px;margin-bottom:10px}
 summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mute)}
+.totop{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:20;width:60px;height:60px;border:0;border-radius:18px;cursor:pointer;display:grid;place-items:center;color:#f2fbf7;background:linear-gradient(145deg,#5fd0c0,#2a9d8f 55%,#1f7f74);box-shadow:0 7px 0 #14584f,0 14px 20px rgba(8,40,36,.35),inset 0 2px 0 #ffffff66;transform:perspective(260px) rotateX(16deg) translateY(30px);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s,box-shadow .12s}
+.totop.show{opacity:1;pointer-events:auto;transform:perspective(260px) rotateX(16deg)}
+.totop.show:hover{transform:perspective(260px) rotateX(0) translateY(-4px);box-shadow:0 11px 0 #14584f,0 20px 26px rgba(8,40,36,.4),inset 0 2px 0 #ffffff66}
+.totop.show:active{transform:perspective(260px) rotateX(0) translateY(6px);box-shadow:0 1px 0 #14584f,0 3px 6px rgba(8,40,36,.4),inset 0 2px 0 #ffffff66}
+.totop:focus-visible{outline:3px solid var(--moss);outline-offset:4px}
+.totop svg{width:28px;height:28px;filter:drop-shadow(0 2px 0 #14584f)}
+@media(prefers-reduced-motion:reduce){.totop{transition:none}}
 </style>
 </head>
 <body>
@@ -80,7 +87,7 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
   <svg class="wave" viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40 Q150 0 300 35 T600 35 T900 35 T1200 30 V70 H0Z"/></svg>
 </header>
 <nav style="overflow-x:auto;justify-content:flex-start"><a href="#alat">Peralatan</a><a href="#perahu">Perahu</a><a href="#ikan">Ikan</a><a href="#spot">Spot</a><a href="#game">Mini game</a><a href="#tips">Tips</a><a href="#faq">Tanya jawab</a></nav>
- 
+
 <section id="alat">
   <h2>Kenali peralatanmu</h2>
   <p class="sub">Pilih satu peralatan, lalu seret model 3D untuk memutarnya.</p>
@@ -90,7 +97,7 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
     <article class="info" id="info" aria-live="polite"></article>
   </div>
 </section>
- 
+
 <section id="game">
   <h2>Mini game: Tangkap Ikan</h2>
   <p class="sub">Gerakkan perahu dengan mouse, jari, atau tombol panah. Klik, ketuk, atau tekan spasi untuk menurunkan kail. Ikan kecil bernilai kecil, ikan besar lebih sulit tapi lebih banyak poinnya. Waktumu 30 detik.</p>
@@ -99,7 +106,7 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
     <canvas id="cv" width="720" height="400" tabindex="0" aria-label="Area permainan memancing"></canvas>
   </div>
 </section>
- 
+
 <section id="perahu">
   <h2>Pilih perahumu</h2>
   <p class="sub">Dari jukung tradisional sampai perahu motor. Putar modelnya dan bandingkan kegunaannya.</p>
@@ -129,8 +136,9 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
   <details><summary>Perlu rompi pelampung di perahu?</summary><p>Ya. Selalu pakai pelampung, terutama di laut, danau besar, dan saat cuaca berubah.</p></details>
   <details><summary>Bagaimana merawat umpan hidup?</summary><p>Simpan di tempat teduh dengan wadah berlubang udara dan ganti air secara berkala. Jangan biarkan terkena panas langsung.</p></details>
 </section>
+<button class="totop" id="totop" aria-label="Kembali ke atas" title="Kembali ke atas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5"/><path d="M5 12l7-7 7 7"/></svg></button>
 <footer>Dunia Mancing. Selamat memancing dan jaga kebersihan perairan.</footer>
- 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const DATA={
@@ -290,10 +298,12 @@ motor:{n:'Perahu Motor',d:'Perahu dengan mesin tempel untuk menjangkau spot jauh
  (function lp(t){requestAnimationFrame(lp);if(!vis||!cu)return;if(!dg&&!calm)ry+=.006;cu.rotation.y=ry;cu.position.y=(calm?0:Math.sin(t/800)*.1)+(cu.userData.y||0);r.render(sc,cm)})(0)}
  function go(k){if(r){if(cu)sc.remove(cu);cu=BT[k]();sc.add(cu)}const x=DB[k];inf.innerHTML='<h3>'+x.n+'</h3><p>'+x.d+'</p><ul>'+x.t.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="chips">'+x.c.map(c=>'<span class="chip">'+c+'</span>').join('')+'</div>';[...tb.children].forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k))}
  Object.keys(DB).forEach(k=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.dataset.k=k;b.textContent=DB[k].n;b.onclick=()=>go(k);tb.appendChild(b)});go('jukung')})();
+// --- kembali ke atas ---
+(function(){const b=$('totop');const f=()=>b.classList.toggle('show',scrollY>500);addEventListener('scroll',f,{passive:true});f();b.onclick=()=>{scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});b.blur()}})();
 // --- ikan & spot ---
 const fs=c=>'<svg viewBox="0 0 160 90"><ellipse cx="72" cy="45" rx="52" ry="26" fill="'+c+'"/><path d="M118 45 L152 20 L152 70Z" fill="'+c+'"/><path d="M60 20 Q75 4 92 22Z" fill="'+c+'" opacity=".8"/><circle cx="38" cy="39" r="5" fill="#12332f"/><path d="M48 56 Q62 66 76 56" stroke="#ffffff88" stroke-width="3" fill="none"/></svg>';
 $('fishGrid').innerHTML=[['Nila','#7aa38f','Air tawar. Umpan: cacing, pelet. Aktif pagi dan sore.'],['Gabus','#5b6b4a','Pemangsa rawa. Umpan: katak tiruan, anak ikan.'],['Kakap','#d1604f','Laut dekat karang. Umpan: udang, cumi, minnow.'],['Kerapu','#b5783a','Dasar karang. Butuh senar kuat dan drag yang pas.'],['Tenggiri','#6aa3c4','Cepat dan agresif. Cocok dengan jig dan popper.'],['Bandeng','#c9d6cf','Tambak dan muara. Umpan: pasta atau lumut halus.']].map(f=>'<div class="card">'+fs(f[1])+'<h3>'+f[0]+'</h3><p>'+f[2]+'</p></div>').join('');
 $('spotGrid').innerHTML=[['🌊','Pantai & laut','linear-gradient(#bfe6ee,#4db6c4)','Lempar jauh dengan joran surf. Perhatikan pasang surut dan ombak.'],['🏞️','Sungai','linear-gradient(#d2ecd0,#6fb08a)','Cari tikungan, bawah pohon rindang, dan arus pelan di tepian.'],['⛰️','Danau & waduk','linear-gradient(#cfe6ee,#5f9fb0)','Cocok dengan perahu. Ikan sering berkumpul dekat tepi dan struktur.'],['🎏','Kolam pemancingan','linear-gradient(#e3f2c9,#8fc48b)','Ramah pemula dan keluarga, hasil hampir selalu ada.'],['🦀','Muara','linear-gradient(#e6e3c8,#7fae9a)','Pertemuan air tawar dan laut. Banyak jenis ikan, arus berubah-ubah.']].map(s=>'<div class="card"><div class="spot" style="background:'+s[2]+'">'+s[0]+'</div><h3>'+s[1]+'</h3><p>'+s[3]+'</p></div>').join('');
 </script>
 </body>
-</html>
+  </html>
